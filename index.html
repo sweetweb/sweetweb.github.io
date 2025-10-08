@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Contraseñas y Nombres de Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .generator {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #usernameResult, #passwordResult {
+            font-family: monospace;
+            font-size: 18px;
+            padding: 10px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+        .contact {
+            text-align: center;
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: #34495e;
+            color: white;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generador de Contraseñas y Nombres de Usuario</h1>
+    
+    <div class="generator">
+        <h2>Generador de Nombres de Usuario</h2>
+        <p>Genera un nombre de usuario aleatorio simple (combinación de palabras y números).</p>
+        <button onclick="generateUsername()">Generar Nombre de Usuario</button>
+        <div id="usernameResult"></div>
+    </div>
+    
+    <div class="generator">
+        <h2>Generador de Contraseñas</h2>
+        <p>Longitud: <input type="number" id="passwordLength" value="12" min="4" max="50"></p>
+        <label><input type="checkbox" id="includeUppercase" checked> Incluir mayúsculas</label><br>
+        <label><input type="checkbox" id="includeLowercase" checked> Incluir minúsculas</label><br>
+        <label><input type="checkbox" id="includeNumbers" checked> Incluir números</label><br>
+        <label><input type="checkbox" id="includeSymbols" checked> Incluir símbolos</label><br>
+        <button onclick="generatePassword()">Generar Contraseña</button>
+        <div id="passwordResult"></div>
+    </div>
+    
+    <div class="contact">
+        <h2>Información de Contacto</h2>
+        <p>Si necesitas ayuda o personalizaciones: <a href="mailto:Sweetwar@proton.me">Sweetwar@proton.me</a></p>
+    </div>
+    
+    <footer>
+        <p>¿Te Gusta Está Web??<br>Contactame Para Cotizar La Tuya.</p>
+    </footer>
+
+    <script>
+        // Generador de Nombres de Usuario
+        const adjectives = ['cool', 'fast', 'smart', 'blue', 'red', 'green', 'big', 'small', 'happy', 'dark'];
+        const nouns = ['cat', 'dog', 'bird', 'car', 'house', 'tree', 'star', 'moon', 'sun', 'river'];
+        
+        function generateUsername() {
+            const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+            const noun = nouns[Math.floor(Math.random() * nouns.length)];
+            const number = Math.floor(Math.random() * 1000);
+            const username = adj + noun + number;
+            document.getElementById('usernameResult').innerText = username;
+        }
+        
+        // Generador de Contraseñas
+        const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+        const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const numbers = '0123456789';
+        const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+        
+        function generatePassword() {
+            const length = parseInt(document.getElementById('passwordLength').value);
+            const includeUpper = document.getElementById('includeUppercase').checked;
+            const includeLower = document.getElementById('includeLowercase').checked;
+            const includeNum = document.getElementById('includeNumbers').checked;
+            const includeSym = document.getElementById('includeSymbols').checked;
+            
+            let charset = '';
+            if (includeLower) charset += lowercase;
+            if (includeUpper) charset += uppercase;
+            if (includeNum) charset += numbers;
+            if (includeSym) charset += symbols;
+            
+            if (charset === '') {
+                alert('Selecciona al menos un tipo de carácter.');
+                return;
+            }
+            
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
+            document.getElementById('passwordResult').innerText = password;
+        }
+    </script>
+</body>
+</html>
